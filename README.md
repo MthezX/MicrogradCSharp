@@ -53,7 +53,7 @@ Debug.Log("Expected: 645.5773, Actual: " + b.grad);
 
 A common "Hello World" example when making Neural Networks is the [XOR gate](https://en.wikipedia.org/wiki/XOR_gate). You want to create a Neural Network that understands the following:
 
-| Input x1 | Input x2 | Output y |
+| Input 1  | Input  2 | Output   |
 | ---------| -------- | -------- |
 | 0        | 0        | 0        |
 | 0        | 1        | 1        |
@@ -125,7 +125,7 @@ for (int i = 0; i <= 100; i++)
 
     //Backward pass
 	
-	//First reset the gradients
+    //First reset the gradients
     nn.ZeroGrad();
 
     //Calculate the gradients
@@ -157,7 +157,7 @@ for (int inputDataIndex = 0; inputDataIndex < outputData.Length; inputDataIndex+
 
 When I ran the neural network I got the following results:
 
-| Input x1 | Input x2 | Output y |
+| Input  1 | Input  2 | Output   |
 | ---------| -------- | -------- |
 | 0        | 0        | 0,022296 |
 | 0        | 1        | 0,959968 |
