@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//Autograd = Automatic gradient making it easier to implement backpropagation
-//Based on “The spelled-out intro to neural networks and backpropagation: building micrograd” By Anrej Karpathy
-public class MicrogradExperiments : MonoBehaviour
+//Run experiments here!
+public class Experiments : MonoBehaviour
 {
     private void Start()
     {
