@@ -149,34 +149,24 @@ public class MicrogradNNExperiments
 
 
 
-    //XOR gate in as few lines of code as possible
+    //Train a Neural Network to understand the XOR gate in as few lines of code as possible
     public void XOR_Gate_Minimal()
     {
         MicroMath.Random.Seed(0);
 
-        float[][] inputDataFloat = { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } };
-        float[] outputDataFloat = new[] { 0f, 1f, 1f, 0f };
-
-        Value[][] inputData = Value.Convert(inputDataFloat);
-        Value[] outputData = Value.Convert(outputDataFloat);
+        Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
+        Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
 
         MLP nn = new(2, new int[] { 3, 1 }); //2 inputs, 3 neurons in the middle layer, 1 output
 
         //Train
         for (int i = 0; i <= 100; i++)
         {
-            Value[] networkOutputs = new Value[outputData.Length];
-
-            for (int inputDataIndex = 0; inputDataIndex < inputData.Length; inputDataIndex++)
-            {
-                networkOutputs[inputDataIndex] = nn.Activate(inputData[inputDataIndex])[0];
-            }
-
             Value loss = new(0f);
 
-            for (int j = 0; j < networkOutputs.Length; j++)
-            { 
-                loss += Value.Pow(networkOutputs[j] - outputData[j], 2f);
+            for (int j = 0; j < inputData.Length; j++) 
+            {
+                loss += Value.Pow(nn.Activate(inputData[j])[0] - outputData[j], 2f); //MSE loss function
             }
 
             Debug.Log($"Iteration: {i}, Network error: {loss.data}");
@@ -184,11 +174,9 @@ public class MicrogradNNExperiments
             nn.ZeroGrad();
             loss.Backward();
 
-            Value[] parameters = nn.GetParameters();
-
-            foreach (Value param in parameters)
+            foreach (Value param in nn.GetParameters())
             {
-                param.data += -0.1f * param.grad; //0.1 is learning rate
+                param.data += -0.1f * param.grad; //Gradient descent with 0.1 learning rate
             }
         }
 

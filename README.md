@@ -60,98 +60,41 @@ A common "Hello World" example when making Neural Networks is the [XOR gate](htt
 | 1        | 0        | 1        |
 | 1        | 1        | 0        |
 
-Init the neural network:
+The code for training and test such a neural network can be done in as few lines as:
 
 ```csharp
 MicroMath.Random.Seed(0);
 
-//Training data XOR
-float[][] inputDataFloat = { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } };
-float[] outputDataFloat = new[] { 0f, 1f, 1f, 0f };
+Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
+Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
 
-//Convert training data from float to Value
-Value[][] inputData = Array.ConvertAll(inputDataFloat, subArray => Array.ConvertAll(subArray, item => new Value(item)));
-Value[] outputData = Array.ConvertAll(outputDataFloat, item => new Value(item));
+MLP nn = new(2, new int[] { 3, 1 }); //2 inputs, 3 neurons in the middle layer, 1 output
 
-//How fast/slow the network will learn
-float learningRate = 0.1f;
-
-//Create the NN
-//2 inputs, 3 neurons in the middle layer, 1 output
-MLP nn = new(2, new int[] { 3, 1 });
-
-TrainNN(nn, learningRate, inputData, outputData);
-TestNN(nn, inputData, outputData);
-```
-
-Train the neural network:
-
-```csharp
+//Train
 for (int i = 0; i <= 100; i++)
 {
-    //Forward pass
-
-    //Catch all outputs for this batch
-    Value[] networkOutputs = new Value[outputData.Length];
-
-    for (int inputDataIndex = 0; inputDataIndex < outputData.Length; inputDataIndex++)
-    {
-        //Run input through the network
-        Value[] outputArray = nn.Activate(inputData[inputDataIndex]);
-
-        //We know we have just a single output
-        Value output = outputArray[0];
-
-        networkOutputs[inputDataIndex] = output;
-    }
-
-    //Error calculations using MSE
     Value loss = new(0f);
 
-    for (int j = 0; j < networkOutputs.Length; j++)
+    for (int j = 0; j < inputData.Length; j++) 
     {
-        Value wantedOutput = outputData[j];
-        Value actualOutput = networkOutputs[j];
-
-        Value errorSquare = Value.Pow(actualOutput - wantedOutput, 2f);
-
-        loss += errorSquare;
+        loss += Value.Pow(nn.Activate(inputData[j])[0] - outputData[j], 2f); //MSE loss function
     }
 
-    if (i % 10 == 0)
-    {
-        Debug.Log($"Iteration: {i}, Network error: {loss.data}");
-    }
+    Debug.Log($"Iteration: {i}, Network error: {loss.data}");
 
-    //Backward pass
-	
-    //First reset the gradients
     nn.ZeroGrad();
-
-    //Calculate the gradients
     loss.Backward();
 
-    //Optimize the weights and biases by using gradient descent
-    Value[] parameters = nn.GetParameters();
-
-    foreach (Value param in parameters)
+    foreach (Value param in nn.GetParameters())
     {
-        param.data += -learningRate * param.grad;
+        param.data += -0.1f * param.grad; //Gradient descent with 0.1 learning rate
     }
 }
-```
 
-Test the neural network:
-
-```csharp
-for (int inputDataIndex = 0; inputDataIndex < outputData.Length; inputDataIndex++)
+//Test
+for (int inputDataIndex = 0; inputDataIndex < inputData.Length; inputDataIndex++)
 {
-    Value[] outputArray = nn.Activate(inputData[inputDataIndex]);
-
-    float wantedData = outputData[inputDataIndex].data;
-    float actualData = outputArray[0].data;
-
-    Debug.Log("Wanted: " + wantedData + ", Actual: " + actualData);
+    Debug.Log("Wanted: " + outputData[0].data + ", Actual: " + nn.Activate(inputData[inputDataIndex])[0].data);
 }
 ```
 
@@ -159,10 +102,10 @@ When I ran the neural network I got the following results:
 
 | Input  1 | Input  2 | Output   |
 | ---------| -------- | -------- |
-| 0        | 0        | 0,022296 |
-| 0        | 1        | 0,959968 |
-| 1        | 0        | 0,961034 |
-| 1        | 1        | 0,026877 |
+| 0        | 0        | 0,004619 |
+| 0        | 1        | 0,928104 |
+| 1        | 0        | 0,912738 |
+| 1        | 1        | 0,012246 |
 
 The outputs are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
 
