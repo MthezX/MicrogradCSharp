@@ -51,7 +51,7 @@ Debug.Log("Expected: 645.5773, Actual: " + b.grad);
 
 ## Neural Network
 
-A common "Hello World" example when making Neural Networks is the [XOR gate](https://en.wikipedia.org/wiki/XOR_gate). We want to create a Neural Network that understands the following:
+A common "Hello World" example when making Neural Networks is the [XOR gate](https://en.wikipedia.org/wiki/XOR_gate). You want to create a Neural Network that understands the following:
 
 | Input x1 | Input x2 | Output y |
 | ---------| -------- | -------- |
