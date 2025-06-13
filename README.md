@@ -124,6 +124,8 @@ for (int i = 0; i <= 100; i++)
     }
 
     //Backward pass
+	
+	//First reset the gradients
     nn.ZeroGrad();
 
     //Calculate the gradients
@@ -162,4 +164,4 @@ When I ran the neural network I got the following results:
 | 1        | 0        | 0,961034 |
 | 1        | 1        | 0,026877 |
 
-The output are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
+The outputs are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
