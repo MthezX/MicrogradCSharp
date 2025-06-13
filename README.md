@@ -10,7 +10,7 @@ This library provides a lightweight, efficient, and simple way to build and trai
 
 ## Example usage of Value class
 
-The idea of scalar-valued automatic differentiation (autograd) engine is to make it easy to find derivatives. If you do some math you can find derivatives by typing .Backward(); which is useful when you start experimenting with Neural Networks and encounter Backpropagation.  
+The idea of scalar-valued automatic differentiation (autograd) engine is to make it easy to find derivatives. If you do some math using the Value class you can find derivatives by typing .Backward(); which is useful when you start experimenting with Neural Networks and encounter Backpropagation.  
 
 ```csharp
 Value a = new(-4.0f);
