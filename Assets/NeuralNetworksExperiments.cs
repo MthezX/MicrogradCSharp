@@ -181,9 +181,9 @@ public class NeuralNetworksExperiments
         }
 
         //Test
-        for (int inputDataIndex = 0; inputDataIndex < inputData.Length; inputDataIndex++)
+        for (int j = 0; j < inputData.Length; j++)
         {
-            Debug.Log("Wanted: " + outputData[0].data + ", Actual: " + nn.Activate(inputData[inputDataIndex])[0].data);
+            Debug.Log("Wanted: " + outputData[j].data + ", Actual: " + nn.Activate(inputData[j])[0].data);
         }
     }
 
