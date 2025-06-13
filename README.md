@@ -8,9 +8,9 @@ This library provides a lightweight and efficient way to build and train neural 
 > We all saw in Terminator what can happen if you experiment too much with Artifical Intelligence, please be careful.  
 
 
-## Example usage
+## Example usage of Value class
 
-Supported operations.
+The idea of scalar-valued automatic differentiation (autograd) engine is to make it easy to find derivatives. If you do some math you can find derivatives by typing .Backward(); which is useful when you start experimenting with Neural Networks.  
 
 ```csharp
 Value a = new(-4.0f);
@@ -49,7 +49,7 @@ Debug.Log("Expected: 645.5773, Actual: " + b.grad);
 ```
 
 
-## Neural Network
+## Example usage of Neural Network library
 
 A common "Hello World" example when making Neural Networks is the [XOR gate](https://en.wikipedia.org/wiki/XOR_gate). You want to create a Neural Network that understands the following:
 
