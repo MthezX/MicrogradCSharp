@@ -172,7 +172,7 @@ public class MicrogradNNExperiments
             Debug.Log($"Iteration: {i}, Network error: {loss.data}");
 
             nn.ZeroGrad();
-            loss.Backward();
+            loss.Backward(); //The notorious backpropagation
 
             foreach (Value param in nn.GetParameters())
             {

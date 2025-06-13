@@ -83,7 +83,7 @@ for (int i = 0; i <= 100; i++)
     Debug.Log($"Iteration: {i}, Network error: {loss.data}");
 
     nn.ZeroGrad();
-    loss.Backward();
+    loss.Backward(); //The notorious backpropagation
 
     foreach (Value param in nn.GetParameters())
     {
