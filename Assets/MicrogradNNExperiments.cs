@@ -22,8 +22,8 @@ public class MicrogradNNExperiments
         float[] outputDataFloat = new[] { 1f, -1f, -1f, 1f };
 
         //Convert training data from float to Value
-        Value[][] inputData = Array.ConvertAll(inputDataFloat, subArray => Array.ConvertAll(subArray, item => new Value(item)));
-        Value[] outputData = Array.ConvertAll(outputDataFloat, item => new Value(item));
+        Value[][] inputData = Value.Convert(inputDataFloat);
+        Value[] outputData = Value.Convert(outputDataFloat);
 
         //How fast/slow the network will learn
         float learningRate = 0.1f;
@@ -49,8 +49,8 @@ public class MicrogradNNExperiments
         float[] outputDataFloat = new[] { 0f, 1f, 1f, 0f };
 
         //Convert training data from float to Value
-        Value[][] inputData = Array.ConvertAll(inputDataFloat, subArray => Array.ConvertAll(subArray, item => new Value(item)));
-        Value[] outputData = Array.ConvertAll(outputDataFloat, item => new Value(item));
+        Value[][] inputData = Value.Convert(inputDataFloat);
+        Value[] outputData = Value.Convert(outputDataFloat);
 
         //How fast/slow the network will learn
         float learningRate = 0.1f;
@@ -160,8 +160,8 @@ public class MicrogradNNExperiments
         float[][] inputDataFloat = { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } };
         float[] outputDataFloat = new[] { 0f, 1f, 1f, 0f };
 
-        Value[][] inputData = Array.ConvertAll(inputDataFloat, subArray => Array.ConvertAll(subArray, item => new Value(item)));
-        Value[] outputData = Array.ConvertAll(outputDataFloat, item => new Value(item));
+        Value[][] inputData = Value.Convert(inputDataFloat);
+        Value[] outputData = Value.Convert(outputDataFloat);
 
         //Weights
         //Init the weights with mean 0 and standardDeviation 1

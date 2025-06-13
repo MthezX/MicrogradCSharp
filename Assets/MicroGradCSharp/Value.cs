@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -273,6 +274,21 @@ namespace Micrograd
         //
         // Conversions
         //
+
+        //float -> Value
+        public static Value[] Convert(float[] input)
+        {
+            Value[] output = Array.ConvertAll(input, item => new Value(item));
+
+            return output;
+        }
+
+        public static Value[][] Convert(float[][] input)
+        {
+            Value[][] output = Array.ConvertAll(input, subArray => Value.Convert(subArray));
+
+            return output;
+        }
 
         //Implicit conversion to float: (float)valueObj instead of valueObj.data 
         //public static implicit operator float(Value a)
