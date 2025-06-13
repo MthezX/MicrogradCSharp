@@ -22,10 +22,10 @@ namespace Micrograd
             //Init weights
             w = new Value[number_of_inputs];
 
-            //Karpathy is here using Uniform but Normal are more standardized in Neural Networks
+            //Random normal distributed weights which is common in Neural Networks
             w = w.Select(item => new Value(MicroMath.Random.Normal())).ToArray();
 
-            //Init the bias with zero which is common in NN
+            //Init the bias with zero which is common in Neural Networks
             b = new(0f);
         }
 
@@ -43,9 +43,6 @@ namespace Micrograd
             {
                 wx += (x[i] * w[i]);
             }
-
-            //Can maybe do it like this but it might screw up the gradients
-            //Value wx = x.Zip(w, (xi, wi) => xi * wi).Sum();
 
             Value input = wx + b;
 

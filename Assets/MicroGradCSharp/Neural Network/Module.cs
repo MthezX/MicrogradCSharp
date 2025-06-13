@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 namespace Micrograd
 {
+    //Parent class to easier get parameters and reset gradients
     public class Module
     {
         private Value[] parameters;

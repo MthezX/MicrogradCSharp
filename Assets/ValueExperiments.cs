@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ValueExperiments
 {
-    //Test example from the micrograd github repo
+    //Test example from the micrograd github repo https://github.com/karpathy/micrograd
     public void TestGradients()
     {
         Value a = new(-4.0f);
@@ -113,7 +113,7 @@ public class ValueExperiments
 
 
 
-    //How derivatives work from the YT video //Basic neuron from the YT video "The spelled-out intro to neural networks and backpropagation: building micrograd"
+    //How derivatives work from the YT video "The spelled-out intro to neural networks and backpropagation: building micrograd"
     public void HowDerivativesWork()
     {
         Value a = new(2f);
