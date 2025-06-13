@@ -33,9 +33,11 @@ public class Experiments : MonoBehaviour
         //Neural Network examples
         MicrogradNNExperiments nn = new();
 
-        nn.XOR_Gate_Just_Values();
+        //nn.XOR_Gate_Just_Values();
 
         //nn.XOR_Gate_NN();
+
+        nn.XOR_Gate_Minimal();
 
         //nn.YouTube_Example();
     }

@@ -2,6 +2,7 @@ using Micrograd;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MicrogradNNExperiments
@@ -143,6 +144,58 @@ public class MicrogradNNExperiments
             float actualData = outputArray[0].data;
 
             Debug.Log("Wanted: " + wantedData + ", Actual: " + actualData);
+        }
+    }
+
+
+
+    //XOR gate in as few lines of code as possible
+    public void XOR_Gate_Minimal()
+    {
+        MicroMath.Random.Seed(0);
+
+        float[][] inputDataFloat = { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } };
+        float[] outputDataFloat = new[] { 0f, 1f, 1f, 0f };
+
+        Value[][] inputData = Value.Convert(inputDataFloat);
+        Value[] outputData = Value.Convert(outputDataFloat);
+
+        MLP nn = new(2, new int[] { 3, 1 }); //2 inputs, 3 neurons in the middle layer, 1 output
+
+        //Train
+        for (int i = 0; i <= 100; i++)
+        {
+            Value[] networkOutputs = new Value[outputData.Length];
+
+            for (int inputDataIndex = 0; inputDataIndex < inputData.Length; inputDataIndex++)
+            {
+                networkOutputs[inputDataIndex] = nn.Activate(inputData[inputDataIndex])[0];
+            }
+
+            Value loss = new(0f);
+
+            for (int j = 0; j < networkOutputs.Length; j++)
+            { 
+                loss += Value.Pow(networkOutputs[j] - outputData[j], 2f);
+            }
+
+            Debug.Log($"Iteration: {i}, Network error: {loss.data}");
+
+            nn.ZeroGrad();
+            loss.Backward();
+
+            Value[] parameters = nn.GetParameters();
+
+            foreach (Value param in parameters)
+            {
+                param.data += -0.1f * param.grad; //0.1 is learning rate
+            }
+        }
+
+        //Test
+        for (int inputDataIndex = 0; inputDataIndex < inputData.Length; inputDataIndex++)
+        {
+            Debug.Log("Wanted: " + outputData[0].data + ", Actual: " + nn.Activate(inputData[inputDataIndex])[0].data);
         }
     }
 
