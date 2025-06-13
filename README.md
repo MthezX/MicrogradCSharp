@@ -60,7 +60,7 @@ A common "Hello World" example when making Neural Networks is the [XOR gate](htt
 | 1        | 0        | 1        |
 | 1        | 1        | 0        |
 
-The code for training and test such a neural network can be done in as few lines as:
+The code for training and test such a neural network can be coded in as few lines as:
 
 ```csharp
 MicroMath.Random.Seed(0);
