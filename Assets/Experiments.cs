@@ -31,7 +31,7 @@ public class Experiments : MonoBehaviour
     private void NeuralNetworkExperiments()
     {
         //Neural Network examples
-        MicrogradNNExperiments nn = new();
+        NeuralNetworksExperiments nn = new();
 
         //nn.XOR_Gate_Just_Values();
 

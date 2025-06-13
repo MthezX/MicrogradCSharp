@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MicrogradNNExperiments
+public class NeuralNetworksExperiments
 {
     //Test network example from the YT video "The spelled-out intro to neural networks and backpropagation: building micrograd"
     public void YouTube_Example()
