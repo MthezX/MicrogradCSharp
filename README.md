@@ -5,7 +5,7 @@ MicroGradCSharp is an open-source project that implements a tiny scalar-valued a
 This library provides a lightweight and efficient way to build and train neural networks directly in Unity. It is designed for developers and researchers looking to integrate machine learning capabilities into their Unity projects with minimal overhead. Whether you're prototyping a new game AI or experimenting with neural networks, MicroGradUnity offers a straightforward and intuitive API to get you started.
 
 > [!CAUTION]
-> Bla bla bla Skynet bla bla bla own risk
+> If you use this library to build Skynet, don't blame me. 
 
 
 ## Example usage
@@ -169,4 +169,4 @@ The outputs are very close to the 0 and 1 we wanted - the output will never be e
 
 ## Learn more
 
-This project was inspired by by Andrej Karpathy's GitHub project [micrograd](https://github.com/karpathy/micrograd) and YouTube video [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0).
+This project was inspired by by Andrej Karpathy's GitHub project [micrograd](https://github.com/karpathy/micrograd) and YouTube video [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0). They are great sources if you want to learn more what's going on behind the scenes. 
