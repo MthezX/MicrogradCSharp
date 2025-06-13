@@ -1,8 +1,8 @@
 # MicroGradCSharp
 
-MicroGradCSharp is an open-source Artificial Intelligence project that implements a tiny scalar-valued automatic differentiation (autograd) engine and a neural network library for C# within the Unity game engine. There's nothing Unity specific in the library so you can use it for other C# projects as well.  
+MicroGradCSharp is an open-source Artificial Intelligence project that implements a tiny scalar-valued automatic differentiation (autograd) engine and a Neural Network library for C# within the Unity game engine. There's nothing Unity specific in the library so you can use it for other C# projects as well.  
 
-This library provides a lightweight and efficient way to build and train neural networks directly in Unity. It is designed for developers and researchers looking to integrate machine learning capabilities into their Unity projects with minimal overhead. Whether you're prototyping a new game AI or experimenting with neural networks, MicroGradUnity offers a straightforward and intuitive API to get you started.
+This library provides a lightweight, efficient, and simple way to build and train Neural Networks directly in Unity. Whether you're prototyping a new game AI or experimenting with Neural Networks, MicroGradCSharp offers a straightforward and intuitive code library to get you started.
 
 > [!CAUTION]
 > We all saw in Terminator what can happen if you experiment too much with Artifical Intelligence, please be careful.  
@@ -10,7 +10,7 @@ This library provides a lightweight and efficient way to build and train neural 
 
 ## Example usage of Value class
 
-The idea of scalar-valued automatic differentiation (autograd) engine is to make it easy to find derivatives. If you do some math you can find derivatives by typing .Backward(); which is useful when you start experimenting with Neural Networks.  
+The idea of scalar-valued automatic differentiation (autograd) engine is to make it easy to find derivatives. If you do some math you can find derivatives by typing .Backward(); which is useful when you start experimenting with Neural Networks and encounter Backpropagation.  
 
 ```csharp
 Value a = new(-4.0f);
