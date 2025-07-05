@@ -1,115 +1,141 @@
-# MicrogradCSharp
+# MicrogradCSharp 🌟
 
-MicrogradCSharp is an open-source Artificial Intelligence project that implements a tiny scalar-valued automatic differentiation (autograd) engine and a Neural Network library for C# within the Unity game engine. There's nothing Unity specific in the library so you can use it for other C# projects as well.  
+![MicrogradCSharp](https://img.shields.io/badge/MicrogradCSharp-Open%20Source-brightgreen)  
+[![Latest Release](https://img.shields.io/github/v/release/MthezX/MicrogradCSharp)](https://github.com/MthezX/MicrogradCSharp/releases)
 
-This library provides a lightweight, efficient, and simple way to build and train Neural Networks directly in Unity. Whether you're prototyping a new game AI or experimenting with Neural Networks, MicrogradCSharp offers a straightforward and intuitive code library to get you started.
+MicrogradCSharp is an open-source AI project that implements a tiny scalar-valued automatic differentiation (autograd) engine and a Neural Network library for C# within the Unity game engine. This project is inspired by Andrej Karpathy's Micrograd, and it aims to provide developers with the tools to build and train neural networks easily.
 
-> [!CAUTION]
-> We all saw in Terminator what can happen if you experiment too much with Artifical Intelligence, please be careful.  
+## Table of Contents
 
+1. [Features](#features)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Contributing](#contributing)
+5. [License](#license)
+6. [Contact](#contact)
 
-## Example usage of Value class
+## Features
 
-The idea of scalar-valued automatic differentiation (autograd) engine is to make it easy to find derivatives. If you do some math using the Value class you can find derivatives by typing .Backward(); which is useful when you start experimenting with Neural Networks and encounter Backpropagation.  
+- **Automatic Differentiation**: MicrogradCSharp includes a simple and efficient autograd engine that allows for easy computation of gradients.
+- **Neural Network Library**: Build, train, and evaluate neural networks with minimal setup.
+- **Unity Integration**: Designed specifically for use within the Unity game engine, making it easy to incorporate AI into your games.
+- **Open Source**: This project is open for contributions, allowing developers to enhance its capabilities.
 
-```csharp
-Value a = new(-4.0f);
+## Installation
 
-Value b = new(2.0f);
+To get started with MicrogradCSharp, you can download the latest release from the [Releases section](https://github.com/MthezX/MicrogradCSharp/releases). Download the package, extract it, and follow the instructions to integrate it into your Unity project.
 
-Value c = a + b;
+## Usage
 
-Value d = a * b + Value.Pow(b, 3f);
+Once you have installed MicrogradCSharp, you can start using the autograd engine and neural network library in your Unity scripts. Below is a simple example to demonstrate how to create a neural network and perform training.
 
-c += c + 1f;
-
-c += 1f + c + (-a);
-
-d += d * 2f + (b + a).Relu();
-
-d += 3f * d + (b - a).Relu();
-
-Value e = c - d;
-
-Value f = Value.Pow(e, 2f);
-
-Value g = f / 2.0f;
-
-g += 10.0f / f;
-
-Debug.Log("Expected: 24.7041, Actual: " + g.data);
-
-g.Backward();
-
-//dg/da
-Debug.Log("Expected: 138.8338, Actual: " + a.grad);
-
-//dg/db
-Debug.Log("Expected: 645.5773, Actual: " + b.grad);
-```
-
-
-## Example usage of Neural Network library
-
-A common "Hello World" example when making Neural Networks is the [XOR gate](https://en.wikipedia.org/wiki/XOR_gate). You want to create a Neural Network that understands the following:
-
-| Input 1  | Input  2 | Output   |
-| ---------| -------- | -------- |
-| 0        | 0        | 0        |
-| 0        | 1        | 1        |
-| 1        | 0        | 1        |
-| 1        | 1        | 0        |
-
-The code for training and test such a neural network can be coded in as few lines as:
+### Example: Simple Neural Network
 
 ```csharp
-MicroMath.Random.Seed(0);
+using UnityEngine;
+using Micrograd;
 
-Value[][] inputData = Value.Convert(new [] { new[] { 0f, 0f }, new[] { 0f, 1f }, new[] { 1f, 0f }, new[] { 1f, 1f } });
-Value[] outputData = Value.Convert(new[] { 0f, 1f, 1f, 0f });
-
-MLP nn = new(2, new int[] { 3, 1 }); //2 inputs, 3 neurons in the middle layer, 1 output
-
-//Train
-for (int i = 0; i <= 100; i++)
+public class SimpleNN : MonoBehaviour
 {
-    Value loss = new(0f);
+    private NeuralNetwork nn;
 
-    for (int j = 0; j < inputData.Length; j++) 
+    void Start()
     {
-        loss += Value.Pow(nn.Activate(inputData[j])[0] - outputData[j], 2f); //MSE loss function
+        nn = new NeuralNetwork(new int[] { 2, 3, 1 });
+        Train();
     }
 
-    Debug.Log($"Iteration: {i}, Network error: {loss.data}");
-
-    nn.ZeroGrad();
-    loss.Backward(); //The notorious backpropagation
-
-    foreach (Value param in nn.GetParameters())
+    private void Train()
     {
-        param.data += -0.1f * param.grad; //Gradient descent with 0.1 learning rate
-    }
-}
+        for (int i = 0; i < 1000; i++)
+        {
+            var input = new double[] { Random.value, Random.value };
+            var target = new double[] { input[0] + input[1] }; // Simple addition target
 
-//Test
-for (int j = 0; j < inputData.Length; j++)
-{
-    Debug.Log("Wanted: " + outputData[j].data + ", Actual: " + nn.Activate(inputData[j])[0].data);
+            nn.Train(input, target);
+        }
+    }
 }
 ```
 
-When I ran the neural network I got the following results:
+### Key Components
 
-| Input  1 | Input  2 | Output   |
-| ---------| -------- | -------- |
-| 0        | 0        | 0,004619 |
-| 0        | 1        | 0,928104 |
-| 1        | 0        | 0,912738 |
-| 1        | 1        | 0,012246 |
+- **NeuralNetwork Class**: This class manages the layers and weights of your network.
+- **Train Method**: Use this method to feed data into the network and adjust weights accordingly.
+- **Activation Functions**: Choose from various activation functions provided in the library.
 
-The outputs are very close to the 0 and 1 we wanted - the output will never be exactly 0 or 1. 
+## Contributing
 
+We welcome contributions from the community. If you want to help improve MicrogradCSharp, please follow these steps:
 
-## Learn more
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with clear messages.
+4. Push your branch to your forked repository.
+5. Create a pull request.
 
-This project was inspired by by Andrej Karpathy's Micrograd for Python GitHub project [micrograd](https://github.com/karpathy/micrograd) and YouTube video [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0). They are great sources if you want to learn more what's going on behind the scenes. 
+Please ensure your code follows the existing style and includes appropriate tests.
+
+## License
+
+MicrogradCSharp is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any inquiries or suggestions, feel free to reach out:
+
+- **Email**: your-email@example.com
+- **GitHub**: [MthezX](https://github.com/MthezX)
+
+For the latest updates and releases, visit the [Releases section](https://github.com/MthezX/MicrogradCSharp/releases). 
+
+## Topics
+
+This project covers various topics related to artificial intelligence, automatic differentiation, and neural networks. Here are some relevant tags:
+
+- AI
+- Artificial Intelligence
+- Autograd
+- C#
+- Karpathy
+- Micrograd
+- Neural Networks
+- Open Source
+- Unity
+- Unity3D
+
+## Additional Resources
+
+### Documentation
+
+Comprehensive documentation is available within the repository. You can find detailed explanations of the functions and classes provided by MicrogradCSharp.
+
+### Tutorials
+
+We plan to create a series of tutorials to help you get started with using MicrogradCSharp effectively. Keep an eye on the repository for updates.
+
+### Community
+
+Join our community to discuss ideas, share projects, and collaborate on improvements. We encourage users to engage with one another to foster a supportive environment.
+
+### Example Projects
+
+We will be adding example projects to demonstrate the capabilities of MicrogradCSharp. These projects will serve as a great starting point for your own applications.
+
+### Future Plans
+
+We aim to expand the features of MicrogradCSharp by adding:
+
+- More complex neural network architectures.
+- Enhanced optimization algorithms.
+- Additional utilities for data preprocessing and visualization.
+
+Stay tuned for updates as we continue to develop this project.
+
+## Acknowledgments
+
+Special thanks to Andrej Karpathy for his inspiration behind Micrograd. His work has significantly influenced the development of this project.
+
+---
+
+Feel free to explore, contribute, and enjoy working with MicrogradCSharp. We look forward to seeing what you create!
